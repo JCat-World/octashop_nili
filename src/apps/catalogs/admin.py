@@ -2,13 +2,14 @@ from django.contrib import admin
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
 
-from .models import Option, ProductClass,Category,ProductAttribute
-
-
+from .models import (Option,
+                     ProductClass,
+                     Category, ProductAttribute, ProductRecommendation, Product, ProductAttributeValue)
 
 
 class CategoryAdmin(TreeAdmin):
     form = movenodeform_factory(Category)
+
 
 admin.site.register(Category, CategoryAdmin)
 
@@ -32,14 +33,33 @@ class AttributeCountFilter(admin.SimpleListFilter):
             return queryset.filter(products_attributes__isnull=False)
         return queryset
 
+
 class ProductAttributeInline(admin.TabularInline):
     model = ProductAttribute
     extra = 1
 
+
+class ProductRecommendationInline(admin.TabularInline):
+    model = ProductRecommendation
+    extra = 1
+    fk_name = 'primary'  # Specify the foreign key field to use for the inline
+
+
 @admin.register(ProductClass)
 class ProductClassAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'track_stock', 'require_shipping','has_attributes')
-    list_filter = ('track_stock', 'require_shipping',AttributeCountFilter)
+    list_display = ('title', 'slug', 'track_stock',
+                    'require_shipping', 'has_attributes')
+    list_filter = ('track_stock', 'require_shipping', AttributeCountFilter)
     prepopulated_fields = {'slug': ('title',)}
-    inlines = [ProductAttributeInline]  # Add the inline for product attributes
+    # Add the inline for product attributes and recommendations
+    inlines = [ProductAttributeInline]
     actions = []
+
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug',)
+    inlines = [
+        # ProductAttributeValueInline,
+        ProductRecommendationInline]
+    prepopulated_fields = {"slug": ("title",)}

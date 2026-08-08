@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     
     'apps.accounts',
     'apps.catalogs',
+    'apps.media',
 ]
 
 MIDDLEWARE = [
@@ -101,20 +102,20 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
+MEDIA_ROOT = '/vol/web/media'
 if DEBUG:
     STATICFILES_DIRS = [BASE_DIR / 'static']
     STATIC_URL = 'static/'
     MEDIA_URL = f'{BASE_URL}media/'
     # MEDIA_ROOT = os.path.join(BASE_DIR.parent, 'data/web/media')
-    MEDIA_ROOT = '/vol/web/media'
+
     STATIC_ROOT = '/vol/web/static'
 else:
     STATICFILES_DIRS = [BASE_DIR / 'static']
     STATIC_URL = 'static/'
     STATIC_ROOT = '/vol/web/static'
     MEDIA_URL = 'media/'
-    MEDIA_ROOT = '/vol/web/media'
+    
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
