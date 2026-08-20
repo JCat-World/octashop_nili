@@ -1,0 +1,201 @@
+{% extends "base/base.html" %} {% load static %} {% block down_content %}
+
+<!-- MAIN -->
+<div class="max-w-[1440px] mx-auto px-3">
+  <div
+    class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5"
+  >
+    <div class="bg-white mx-5 rounded-2xl mb-4">
+      <div class="py-3">
+        <h3 class="text-xl font-semibold text-gray-800">{{ category }}</h3>
+      </div>
+    </div>
+    <div class="md:flex">
+      <div class="md:w-4/12 lg:w-3/12">
+        <div class="bg-white mx-5 mb-4 px-3 py-3 border rounded-xl">
+          <div>
+            <div class="opacity-80 mb-1">برند:</div>
+            <div class="space-y-1">
+              <!-- Box Of Brands -->
+              {% block brands_choise %}
+              {% include 'shops/plates/product-category/brands-choise-plate.html' %}
+              {% endblock brands_choise %}
+            </div>
+          </div>
+        </div>
+        <!--
+        
+        <div class="bg-white mx-5 mb-4 px-3 py-3 border rounded-xl">
+          <div>
+            <div class="opacity-80 mb-1">رنگ:</div>
+            <div class="space-y-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div
+                class="flex items-center rounded-lg opacity-80 bg-black text-white"
+              >
+                <input
+                  id="checkbox-item-1"
+                  type="checkbox"
+                  value=""
+                  class="w-4 h-4 bg-gray-100 border-gray-300 mr-3"
+                />
+                <label
+                  for="checkbox-item-1"
+                  class="w-full text-xs rounded pr-1 py-2"
+                  >مشکی</label
+                >
+              </div>
+              <div
+                class="flex items-center rounded-lg opacity-80 bg-white border"
+              >
+                <input
+                  id="checkbox-item-2"
+                  type="checkbox"
+                  value=""
+                  class="w-4 h-4 bg-gray-100 border-gray-300 mr-3"
+                />
+                <label
+                  for="checkbox-item-2"
+                  class="w-full text-xs text-gray-900 rounded pr-1 py-2"
+                  >سفید</label
+                >
+              </div>
+              <div
+                class="flex items-center rounded-lg opacity-80 bg-green-600 text-white"
+              >
+                <input
+                  id="checkbox-item-3"
+                  type="checkbox"
+                  value=""
+                  class="w-4 h-4 border-gray-300 mr-3"
+                />
+                <label
+                  for="checkbox-item-3"
+                  class="w-full text-xs rounded pr-1 py-2"
+                  >سبز</label
+                >
+              </div>
+              <div
+                class="flex items-center rounded-lg opacity-80 bg-gray-400 text-white"
+              >
+                <input
+                  id="checkbox-item-4"
+                  type="checkbox"
+                  value=""
+                  class="w-4 h-4 border-gray-300 mr-3"
+                />
+                <label
+                  for="checkbox-item-4"
+                  class="w-full text-xs rounded pr-1 py-2"
+                  >خاکستری</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        -->
+        <!---->
+        {% comment %} <div class="bg-white mx-5 mb-4 px-3 py-3 border rounded-xl">
+          <div class="wrapper">
+            <div
+              class="price-input flex flex-col-reverse gap-y-3 text-sm opacity-80"
+            >
+              <div class="field">
+                <span>تا</span>
+                <input type="number" value="1000000" />
+                <span>تومان</span>
+              </div>
+              <div class="field">
+                <span>از</span>
+                <input type="number" value="0" />
+                <span>تومان</span>
+              </div>
+            </div>
+            <div class="slider">
+              <!-- <div class="progress"></div> -->
+            </div>
+            <div class="range-input">
+              <input
+                type="range"
+                class="range-min"
+                min="0"
+                max="1000000"
+                value="0"
+                step="100"
+              />
+              <input
+                type="range"
+                class="range-max"
+                min="0"
+                max="1000000"
+                value="1000000"
+                step="100"
+              />
+            </div>
+            <div class="flex justify-between opacity-70 text-xs my-3">
+              <span> ارزان ترین </span>
+              <span> گران ترین </span>
+            </div>
+          </div>
+        </div> {% endcomment %}
+      </div>
+      <div class="md:w-8/12 lg:w-9/12">
+        {% comment %} <div class="bg-white mx-1 rounded-2xl grid place-items-center">
+          <div class="w-full">
+            <div class="py-3 border-b">
+              <div class="opacity-80 text-sm mb-2">مرتب سازی:</div>
+              <div class="flex flex-wrap gap-5 justify-start items-center">
+                <div
+                  class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer text-red-600"
+                >
+                  محبوب ترین
+                </div>
+                <div
+                  class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer"
+                >
+                  پرفروش ترین
+                </div>
+                <div
+                  class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer"
+                >
+                  ارزان ترین
+                </div>
+                <div
+                  class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer"
+                >
+                  گران ترین
+                </div>
+                <div
+                  class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer"
+                >
+                  جدیدترین
+                </div>
+                <div
+                  class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer"
+                >
+                  پربازدیدترین
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> {% endcomment %}
+        <div class="bg-white rounded-2xl">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-5 px-1 rounded-2xl py-5"
+          >
+          {% block products_list %}
+          {% include 'shops/plates/product-category/product-plate.html' %}
+          {% endblock products_list %}
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock down_content %} {% block block_scripts %}
+<!-- RANGE INPUT -->
+<script src="{% static 'base/js/rangeinput.js' %}"></script>
+
+{% endblock block_scripts %}

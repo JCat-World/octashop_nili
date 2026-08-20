@@ -1,0 +1,26 @@
+{% load static %}
+
+
+{% block hero_slider_mobile %}
+
+<div class="md:w-[100%] mx-auto md:mt-5 md:hidden">
+    <div dir="ltr" class="owl-carousel">
+      {% if hero_sliders %}
+      {%for slider in hero_sliders%}
+      <div class="box-border">
+        <!--   Image Size  1804*600   -->
+        <a href="#"
+          ><img class="rounded-md md:rounded-3xl md:px-2 box-border" src="{{ slider.image.url }}" alt=""
+        /></a>
+      </div>
+      {% endfor %} 
+    {% endif %}
+      
+    </div>
+  </div>
+
+
+
+
+
+{% endblock hero_slider_mobile %}

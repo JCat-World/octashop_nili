@@ -1,0 +1,15 @@
+.cart-sum-prod{
+    display: flex;
+    position: relative;
+    width: 32px;
+    height: 32px;
+    background-color: rgba(128, 128, 128, 0.158);
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px;
+}
+
+.cart-sum-p{
+    font-size: 12px;
+}

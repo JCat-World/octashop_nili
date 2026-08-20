@@ -1,0 +1,365 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+
+{% block top_links %}
+  <link
+  rel="stylesheet"
+  href=" {% static 'payments/css/order-page.css' %} "
+  />
+
+{% endblock top_links %}
+
+
+
+
+{% block down_content %}
+
+<!-- MAIN -->
+<div class="max-w-[1440px] mx-auto px-3">
+  <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
+    <div class="mb-2">
+      <!-- Order Done -->
+      {% if order.payment_status == True and order.status == True %}
+        <div class="text-xl text-green-700 opacity-90 mb-3">
+          سفارش شما با موفقیت ثبت و تایید شد.
+        </div>
+        <div class="text-sm opacity-70">
+          سفارش شما در حال آماده سازی برای ارسال میباشد.
+        </div>
+
+        <!-- Waiting For Payment -->
+        {% elif order.payment_status == False and order.status == False%}
+          <div class="text-xl text-red-700 opacity-90 mb-3">
+            در انتظار پرداخت...
+          </div>
+          <div class="text-sm opacity-70">
+            به دلیل به روز رسانی درگاه پرداخت بانکی، در حال حاضر، میتوانید از طریق واریز مستقیم(کارت به کارت) فرایند خرید خود را تکمیل نمایید.
+            <br>
+            اطلاعات پرداخت در پایین همین صفحه قراردارد.
+          </div>
+
+        <!-- waiting to accept order -->
+        {% elif order.payment_status == True and order.status == False%}
+          <div class="text-xl text-orange-700 opacity-90 mb-3">
+            در انتظار تایید سفارش...
+          </div>
+          <div class="text-sm opacity-70">
+            سفارش شما در فارس ماسل با موفقیت ثبت شده است. منتظر تایید سفارش و ارسال کالای خود بمانید.
+          </div>
+
+        {% endif %}
+        
+
+    </div>
+    <div class="bg-gray-50 shadow-md rounded-xl px-5 py-4 my-3 grid grid-cols-1 md:grid-cols-2 gap-y-10">
+      <div class="grid gap-4">
+        <div class="opacity-90 text-sm">
+          جزئیات سفارش :             
+        </div>
+        <div class="flex text-xs opacity-80">
+          <div>
+            کد پیگیری سفارش:
+          </div>
+          <div>
+            <span id="order_id" value="{{order.id}}">  
+            {{order.id}}
+            </span>
+          </div>
+        </div>
+        <div class="flex text-xs opacity-80">
+          <div>
+            تاریخ ثبت سفارش:
+          </div>
+          <div>
+          {{ order.order_date}}
+          </div>
+        </div>
+        <div class="flex text-xs opacity-80">
+          <div>
+            تاریخ تایید سفارش:
+          </div>
+          <div>
+            
+            {% if order.status and order.payment_status %}
+            {{ order.order_date_done}}
+              {% elif not order.status and order.payment_status  %}
+              سفارش شما با موفقیت ثبت گردید و در انتظار تایید و ارسال میباشد...
+            
+              {% elif not order.status and not order.payment_status  %}
+              سفارش شما تکمیل نشده است (در انتظار پرداخت)
+            {% endif %}
+              
+          </div>
+        </div>
+        <div class="flex text-xs opacity-80">
+          <div>
+            قیمت نهایی:
+          </div>
+          <div>
+            {% if order.payment_status %}
+              {{ order.total_price}}
+            {% else %}
+              {{ total_price }}
+            {% endif %}
+          </div>
+          <div>
+            تومان
+          </div>
+        </div>
+      </div>
+      <div class="grid gap-4">
+        <div class="opacity-90 text-sm">
+          جزئیات آدرس:
+        </div>
+        <div class="opacity-80 text-xs">
+          {{ order.address}}
+        </div>
+        <div class="flex text-xs opacity-80">
+          <div>
+            شماره تلفن:
+          </div>
+          <div>
+            {{order.phone_number}}
+          </div>
+        </div>
+        <div class="flex text-xs opacity-80">
+          <div>
+            کد پستی:
+          </div>
+          <div>
+            {{order.postal_code}}
+          </div>
+        </div>
+        <div class="flex text-xs opacity-80">
+          <div>
+            ایمیل:
+          </div>
+          <div>
+            {{ user.email }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="text-lg md:text-xl opacity-70 mb-3 mt-5">
+        جزئیات محصولات
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 lg:px-16">
+        
+        {% for product in order.ordered_product.all %}
+
+
+        <span class="card swiper-slide my-2 p-2 md:p-3 ">
+          <div class="image-box mb-6 ">
+            <a href="{% url 'product' product.product.id %}">
+              <img class="hover:scale-105 transition rounded-3xl w-full mx-auto" src="{{ product.product.images.all.0.image.url }}" alt="" />
+            </a>
+          </div>
+          <div class="space-y-3 text-center">
+            <span class="text-sm opacity-80 mb-2 h-8 md:h-10">
+              <a href="{% url 'product' product.product.id %}">
+                    {{product.product.category}}
+                      {% if product.product.model is not None %}
+                        {{ product.product.model }}
+                      {% endif %}
+                    {{ product.product.company_name}}
+              </a>
+            </span>
+            {% if product.product.is_offer %}
+                    <div class="flex justify-end mb-2 text-sm opacity-80 pl-3 md:pl-0">
+                      <div>{{ product.product.offer_price }}</div>
+                      <div>تومان</div>
+                    </div>
+                    <div class="flex justify-end text-xs opacity-75 pl-3 md:pl-0">
+                      
+                      <div class="line-through">{{product.product.price}}</div>
+                      <div class="line-through">تومان</div>
+                    </div>
+                    {% else %}
+                    <div class="flex justify-end mb-2 text-sm opacity-80 pl-3 md:pl-0">
+                      <div>{{ product.product.price }}</div>
+                      <div>تومان</div>
+                    </div>
+                    
+                    <div class="flex justify-end text-xs opacity-75 pl-3 md:pl-0">
+                      <div class="">تخفیف ندارد</div>
+                    </div>
+                    
+                    
+                  {% endif %}
+                  <div class="flex justify-end mb-2 text-sm opacity-80 pl-3 md:pl-0">
+                    <div>تعداد: {{ product.quantity }} </div>
+                  </div>
+                  
+          </div>
+        </span>
+          
+        {% endfor %}
+          
+
+
+        
+
+
+      </div>
+    </div>
+    
+    <div class="border shadow-xl rounded-2xl mx-auto max-w-xl mt-7 flex flex-col gap-y-5 py-5 px-5 md:px-20">
+      {% comment %} <div class="flex justify-between">
+        <div>
+          قیمت کل:
+        </div>
+        <div class="flex gap-x-1">
+          <div>
+            1,240,000
+          </div>
+          <div>
+            تومان
+          </div>
+        </div>
+      </div> {% endcomment %}
+      {% comment %} <div class="flex justify-between">
+        <div>
+          حمل و نقل:
+        </div>
+        <div class="flex gap-x-1">
+          <div>
+            40,000
+          </div>
+          <div>
+            تومان
+          </div>
+        </div>
+      </div> {% endcomment %}
+      {% comment %} <div class="flex justify-between">
+        <div>
+          سود شما از این خرید:
+        </div>
+        <div class="flex gap-x-1">
+          <div>
+            80,000
+          </div>
+          <div>
+            تومان
+          </div>
+        </div>
+      </div> {% endcomment %}
+      
+      <div class="flex justify-between">
+        <div class="text-red-600">
+          مجموع نهایی:
+        </div>
+        <div class="flex gap-x-1">
+          <div>
+            {% if order.payment_status %}
+              {{ order.total_price}}
+            {% else %}
+              {{ total_price }}
+            {% endif %}
+          </div>
+          <div>
+            تومان
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if not order.payment_status %}
+    <div class="border shadow-xl rounded-2xl mx-auto max-w-xl mt-7 flex flex-col gap-y-5 py-5 px-5 md:px-20">
+      
+      <div class="flex justify-between">
+        <div class="text-red-600">
+          شماره کارت:
+        </div>
+        <div class="flex gap-x-1">
+          <div>
+            5562264848265562
+          </div>
+          <div>
+            محمد علیزاده
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
+    
+
+    <!-- payment field -->
+    <!-- Order Done -->
+    {% if order.payment_status == True and order.status == True %}
+    
+    <div class="border shadow-xl rounded-2xl mx-auto max-w-xl mt-7 flex flex-col gap-y-5 py-5 px-5 md:px-20">
+      
+      <div class="flex justify-center">
+        <div class="payment-img-container" id="payment-img-container">
+          <div class="payment-img-box" id="paid-img-box">
+            <img src="{{ order.receipt.url }}" alt="رسید بانکی" class="img-uploaded">
+            <br>
+            <h5 class="text-receipt-upload"> رسید واریزی شما</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Waiting For Payment -->
+    {% elif order.payment_status == False and order.status == False%}
+    <div class="border shadow-xl rounded-2xl mx-auto max-w-xl mt-7 flex flex-col gap-y-5 py-5 px-5 md:px-20">
+      
+      <div class="flex justify-center">
+        <div class="payment-img-container" id="payment-img-container">
+          <div class="payment-img-box" id="payment-img-box">
+            <img src="{% static 'base/image/upload.png' %}" alt="آپلود رسید بانکی" class="icon-receipt-upload">
+            <br>
+            <h5 class="text-receipt-upload">آپلود رسید واریز</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="flex justify-center items-center opacity-90 my-5" id="receipt-bt">
+      <h5 class="text-receipt-upload" id="text-receipt-upload">لطفا فیش واریزی خود را آپلود کنید</h5>
+      <button class='px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-xs' id='bt-payment-done'>تکمیل خرید</button>
+      
+    </span>
+
+    <!-- waiting to accept order -->
+    {% elif order.payment_status == True and order.status == False%}
+    <div class="border shadow-xl rounded-2xl mx-auto max-w-xl mt-7 flex flex-col gap-y-5 py-5 px-5 md:px-20">
+      
+      <div class="flex justify-center">
+        <div class="payment-img-container" id="payment-img-container">
+          <div class="payment-img-box" id="paid-img-box">
+            <img src="{{ order.receipt.url }}" alt="رسید بانکی" class="img-uploaded">
+            <br>
+            <h5 class="text-receipt-upload"> رسید واریزی شما</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% comment %} <span class="flex justify-center items-center opacity-90 my-5" id="receipt-bt">
+      <h5 class="text-receipt-upload" id="text-receipt-upload">لطفا فیش واریزی خود را آپلود کنید</h5>
+      <button class='px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-xs' id='bt-payment-done'>تکمیل خرید</button>
+      
+    </span> {% endcomment %}
+
+    {% endif %}
+    
+  </div>
+  <span class="flex justify-center items-center opacity-90 my-5">
+    <button class="px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-xs button-go" id="button-back" onclick="window.history.go(-1); return false;">صفحه قبل</button>
+    <span> - </span>
+    <a href="{% url 'index' %}" class="px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-xs button-go" id="button-home">صفحه اصلی</a>
+    
+  </span>
+</div>
+
+{% endblock down_content %}
+
+
+
+{% block block_scripts %}
+  <script type="text/javascript" src=" {% static 'payments/js/actions.js' %} "></script>
+
+
+{% endblock block_scripts %}

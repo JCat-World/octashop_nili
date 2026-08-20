@@ -1,0 +1,125 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block down_content %}
+
+<div class="max-w-[1440px] mx-auto px-3">
+    <div class="bg-white my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
+      <div class="grid place-items-center">
+        <div class="w-full mx-auto rounded">
+          <div class="bg-white p-5">
+            <h3 class="text-lg font-medium text-gray-800">قوانین و مقررات</h3>
+            <p class="text-sm font-light text-gray-600 my-3">
+              اگه سوال مورد نظرتون رو پیدا نکردید به 
+              <a class="hover:text-red-600 text-red-500 transition" href="">پشتیبانی</a>
+              پیام بدید
+            </p>
+            <div>
+              <!-- header -->
+              <div class="accordion-header cursor-pointer transition flex space-x-5 px-5 items-center h-auto min-h-[64px] py-2 sm:h-16 border rounded-xl my-2">
+                <h2 class="opacity-80">قوانین استفاده از عکس های محصولات</h2>
+              </div>
+              <!-- Content -->
+              <div class="accordion-content transition-all px-5 pt-0 overflow-hidden max-h-0">
+                <p class="leading-6 font-light pl-9 text-justify opacity-70 pt-2">
+                  تنها استفاده غیر تجاری مورد تایید است.
+                </p>
+                <div class="text-left">
+                  <button class="text-sm my-5 opacity-80 text-red-600 hover:text-red-700 transition">توضیحات بیشتر</button>
+                </div>
+              </div>
+            </div>
+            {% comment %} <div>
+              <!-- header -->
+              <div class="accordion-header cursor-pointer transition flex space-x-5 px-5 items-center h-auto min-h-[64px] py-2 sm:h-16 border rounded-xl my-2">
+                <h2 class="opacity-80">قوانین تایید سفارش</h2>
+              </div>
+              <!-- Content -->
+              <div class="accordion-content transition-all px-5 pt-0 overflow-hidden max-h-0">
+                <p class="leading-6 font-light pl-9 text-justify opacity-70 pt-2">
+                  تنها استفاده غیر تجاری مورد تایید است.
+                </p>
+                <div class="text-left">
+                  <button class="text-sm my-5 opacity-80 text-red-600 hover:text-red-700 transition">توضیحات بیشتر</button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <!-- header -->
+              <div class="accordion-header cursor-pointer transition flex space-x-5 px-5 items-center h-auto min-h-[64px] py-2 sm:h-16 border rounded-xl my-2">
+                <h2 class="opacity-80">مدارک قابل تایید</h2>
+              </div>
+              <!-- Content -->
+              <div class="accordion-content transition-all px-5 pt-0 overflow-hidden max-h-0">
+                <p class="leading-6 font-light pl-9 text-justify opacity-70 pt-2">
+                  تنها استفاده غیر تجاری مورد تایید است.
+                </p>
+                <div class="text-left">
+                  <button class="text-sm my-5 opacity-80 text-red-600 hover:text-red-700 transition">توضیحات بیشتر</button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <!-- header -->
+              <div class="accordion-header cursor-pointer transition flex space-x-5 px-5 items-center h-auto min-h-[64px] py-2 sm:h-16 border rounded-xl my-2">
+                <h2 class="opacity-80">کارت ملی یا شناسنامه؟</h2>
+              </div>
+              <!-- Content -->
+              <div class="accordion-content transition-all px-5 pt-0 overflow-hidden max-h-0">
+                <p class="leading-6 font-light pl-9 text-justify opacity-70 pt-2">
+                  تنها استفاده غیر تجاری مورد تایید است.
+                </p>
+                <div class="text-left">
+                  <button class="text-sm my-5 opacity-80 text-red-600 hover:text-red-700 transition">توضیحات بیشتر</button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <!-- header -->
+              <div class="accordion-header cursor-pointer transition flex space-x-5 px-5 items-center h-auto min-h-[64px] py-2 sm:h-16 border rounded-xl my-2">
+                <h2 class="opacity-80">نبود کارت ملی</h2>
+              </div>
+              <!-- Content -->
+              <div class="accordion-content transition-all px-5 pt-0 overflow-hidden max-h-0">
+                <p class="leading-6 font-light pl-9 text-justify opacity-70 pt-2">
+                  تنها استفاده غیر تجاری مورد تایید است.
+                </p>
+                <div class="text-left">
+                  <button class="text-sm my-5 opacity-80 text-red-600 hover:text-red-700 transition">توضیحات بیشتر</button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <!-- header -->
+              <div class="accordion-header cursor-pointer transition flex space-x-5 px-5 items-center h-auto min-h-[64px] py-2 sm:h-16 border rounded-xl my-2">
+                <h2 class="opacity-80">درخواست های غیرمجاز به سایت</h2>
+              </div>
+              <!-- Content -->
+              <div class="accordion-content transition-all px-5 pt-0 overflow-hidden max-h-0">
+                <p class="leading-6 font-light pl-9 text-justify opacity-70 pt-2">
+                  تنها استفاده غیر تجاری مورد تایید است.
+                </p>
+                <div class="text-left">
+                  <button class="text-sm my-5 opacity-80 text-red-600 hover:text-red-700 transition">توضیحات بیشتر</button>
+                </div>
+              </div>
+            </div> {% endcomment %}
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+
+
+{% endblock down_content %}
+
+
+
+
+{% block block_scripts %}
+
+<!-- FAQ JS -->
+<script type="text/javascript" src="{% static 'base/js/faq.js' %}"></script>
+
+
+{% endblock block_scripts %}

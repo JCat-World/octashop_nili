@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود</title>
+
+  <link rel="stylesheet" href="{% static 'base/css/output.css' %}" />
+  <link rel="stylesheet" href="{% static 'base/css/font.css' %}">
+  <style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+      <li>
+        <div class="text-center text-red-500 text-sm mb-2">
+          {{ message }}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <div class="flex justify-center items-center text-right h-screen w-96 mx-auto">
+    <div class="shadow-xl rounded-2xl p-8 bg-white">
+      <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-2">
+          <a href="{% url 'index' %}">
+            <img src="{% static 'base//image/logo.png' %}" alt="" class="w-36 mx-auto">
+          </a>
+        </div>
+        <div class="opacity-80 text-lg mb-5">
+          ورود
+        </div>
+        <div class="text-xs opacity-70 mb-2">
+          شماره همراه خود را وارد کنید:
+        </div>
+        <div class="mb-2">
+          <input class="w-full drop-shadow-lg outline-none rounded-2xl py-2 text-center" type="text" name="phone_number">
+        </div>
+        <div class="text-xs opacity-70 mb-2">
+          رمز عبور
+        </div>
+        <div class="mb-2">
+          <input class="w-full drop-shadow-lg outline-none rounded-2xl py-2 text-center" type="password" name="password">
+        </div>
+        <div class="text-center mt-5 mb-3">
+          <button class="bg-red-500 hover:bg-red-600 transition text-white opacity-80 rounded-2xl w-full py-2" type="submit">
+            ورود
+          </button>
+        </div>
+        <div class="text-xs opacity-80">
+          ثبت نام یا ورود شما به منظور پذیرش
+          <a href="{% url 'rules' %}" class="text-red-500">قوانین و مقررات</a>
+          ایران ماسل می باشد
+        </div>
+        <br>
+        <div class="text-xs opacity-80">
+          جهت ثبت نام
+          <a href="{% url 'register' %}" class="text-red-500">اینجا</a>
+          کلیک کنید
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

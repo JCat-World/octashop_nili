@@ -1,0 +1,55 @@
+{% load static %}
+{% if products %}
+  {% for product in products %}
+    <a
+     href="{% url 'home:product' product.id %}"
+     class="my-2 py-2 md:p-3 border rounded-xl flex items-center sm:inline hover:shadow-lg transition">
+      <div class="image-box sm:mb-6">
+        
+        <div style="position: relative;text-align: center;">
+          
+
+          <img class="hover:scale-105 transition rounded-md sm:rounded-3xl w-24 sm:w-full mx-auto" src="{{ product.images.all.0.image.image.url }}" alt="تصویر محصول" />
+          {% if product.stockrecords.first.in_offer %}
+          <div style="position: absolute;top: 8px;"><h6 class="px-2 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-sm">تخفیف ویژه</h6></div>
+
+          {% endif %}
+        </div>
+      </div>
+      <div class="flex flex-col w-full">
+        <span class="text-xs sm:text-sm opacity-90 mb-5">
+          <div class="leading-7 h-auto">
+            {{ product.category }}
+            {% if product.brand is not None %}
+              {{ product.brand }}
+            {% endif %}
+
+            {{ product.title }}
+          </div>
+        </span>
+        {% if product.stockrecords.first.in_offer %}
+          <div class="flex justify-end mb-2 text-sm opacity-80 pl-3 md:pl-0">
+            <div>{{ product.stockrecords.first.offer_price }}</div>
+            <div>تومان</div>
+          </div>
+          <div class="flex justify-end text-xs opacity-75 pl-3 md:pl-0">
+            <div class="line-through">{{ product.stockrecords.first.sale_price }}</div>
+            <div class="line-through">تومان</div>
+          </div>
+        {% else %}
+          <div class="flex justify-end mb-2 text-sm opacity-80 pl-3 md:pl-0">
+            <div>{{ product.stockrecords.first.sale_price }}</div>
+            <div>تومان</div>
+          </div>
+
+          <div class="flex justify-end text-xs opacity-75 pl-3 md:pl-0">
+            <div class="line-through">&nbsp</div>
+            <div class="line-through">&nbsp</div>
+          </div>
+        {% endif %}
+        <br />
+        <span class="flex justify-center items-center opacity-90"><button class="px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-sm">افزودن به سبد</button></span>
+      </div>
+    </a>
+  {% endfor %}
+{% endif %}

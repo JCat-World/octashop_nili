@@ -1,0 +1,111 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block down_content %}
+
+<div class="max-w-[1440px] mx-auto px-3">
+    <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
+      <div class="flex flex-col md:flex-row gap-5">
+
+
+
+
+
+
+        <!--  Right Side Profile -->
+        {% block right_profile %}
+        {% include 'accounts/plates/right-profile.html' %}
+        {% endblock right_profile %}
+
+
+
+
+
+        <div class="md:w-8/12 lg:w-9/12">
+          <div class="relative overflow-x-auto shadow-md rounded-xl">
+            <table class="w-full text-sm text-right text-gray-600">
+              <thead class="text-xs text-gray-700 bg-gray-50">
+                <tr>
+                  <th scope="col" class="px-6 py-3">
+                    شماره سفارش
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    تاریخ ثبت سفارش
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    وضعیت پرداخت
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    مجموع
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    وضعیت سفارش
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    جزئیات
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in orders %}
+                
+                <tr class="hover:bg-gray-100 transition text-xs border-b">
+                  <th scope="row" class="px-6 py-4 font-medium">
+                    {{ order.id }}
+                  </th>
+                  <td class="px-6 py-4">
+                    {{ order.order_date}}
+                  </td>
+
+                  {% if order.payment_status %}
+                    <td class="lg:px-6 py-4 text-green-500">
+                        پرداخت شده
+                    </td>
+                    
+                  {% else %}
+                    <td class="lg:px-6 py-4 text-red-500">
+                        در انتظار پرداخت
+                    </td>
+                  {% endif %}
+                  <td class="px-6 py-4">
+                    {% if order.payment_status %}
+                        {{ order.total_price}}
+                    {% else %}
+                        نامشخص
+                    {% endif %}
+                  </td>
+                  {% if order.status %}
+                    <td class="lg:px-6 py-4 text-green-500">
+                        سفارش تایید شده
+                    </td>
+                    
+                  {% else %}
+                    <td class="lg:px-6 py-4 text-red-500">
+                        در انتظار تایید
+                    </td>
+                  {% endif %}
+                  <td class="px-6 py-4">
+                    <a href="{% url 'order-view' order.id %}" class="text-red-500 border-b border-red-400">مشاهده</a>
+                  </td>
+                </tr>
+
+                {% endfor %}              
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock down_content %}
+
+
+{% block block_scripts %}
+
+<script type="text/javascript" src=" {% static 'accounts/js/orders-page-actions.js' %} "></script>
+
+
+{% endblock block_scripts %}

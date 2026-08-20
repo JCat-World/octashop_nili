@@ -1,0 +1,145 @@
+{% load static %}
+<div class="w-full">
+  <div class="py-2 px-5 bg-white shadow-stone-50 shadow-md hidden lg:block">
+    <div class="-mx-1">
+      <ul class="flex w-full flex-wrap items-center h-10">
+        <!-- index link -->
+        <li class="block relative">
+          <a
+            href=" {% url 'home:home' %} "
+            class="flex items-center h-10 text-sm leading-10 px-4 mx-1 transition text-gray-700 hover:text-red-500"
+          >
+            <span class="border-b-2 border-red-600">صفحه اصلی</span>
+          </a>
+        </li>
+        <!-- Sub List -->
+        {% if sub_categories %} {% for sub_category in sub_categories %}
+        <li class="block relative" x-data="{showChildren:false}">
+          <a
+             href="{% url 'home:category-summary' %}" 
+            class="flex items-center h-10 leading-10 px-3 text-sm mx-1 transition text-gray-700 hover:text-red-500"
+            @click.prevent="showChildren=!showChildren"
+            @mouseenter="showChildren=true"
+            @mouseleave="showChildren=false"
+          >
+            <span>{{ sub_category }}</span>
+            <span>
+              <img
+                class="w-4 mr-1"
+                src=" {% static 'base/image/chevron-down-login.png' %} "
+                alt=""
+              />
+            </span>
+          </a>
+          <div
+            class="bg-white rounded-2xl shadow-md text-sm opacity-[0.97] absolute top-auto right-0 min-w-full w-56 z-30 mt-3"
+            x-show="showChildren"
+            x-transition:enter="transition ease duration-300 transform"
+            x-transition:enter-start="opacity-0 translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease duration-300 transform"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-4"
+            style="display: none"
+            @mouseenter="showChildren=true"
+            @mouseleave="showChildren=false"
+          >
+            <div class="bg-white rounded-2xl w-full relative z-10 py-2 px-2">
+              <ul class="list-reset">
+                <!-- every categories objects to list -->
+
+                {% for category in sub_category.products.all %}
+                <li class="relative">
+                  <a
+                    href="{% url 'home:product-category' category.id %}"
+                    class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer"
+                  >
+                    <span class="flex-1">{{ category }}</span>
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </li>
+        {% endfor %} {% endif %}
+        <li class="block relative" x-data="{showChildren:false}">
+          <a
+            href="./category-index.html"
+            class="flex items-center h-10 leading-10 px-3 text-sm mx-1 transition text-gray-700 hover:text-red-500"
+            @click.prevent="showChildren=!showChildren"
+            @mouseenter="showChildren=true"
+            @mouseleave="showChildren=false"
+          >
+            <span>صفحات</span>
+            <span>
+              <img
+                class="w-4 mr-1"
+                src=" {% static 'base/image/chevron-down-login.png' %} "
+                alt=""
+              />
+            </span>
+          </a>
+          <div
+            class="bg-white rounded-2xl shadow-md text-sm opacity-[0.97] absolute top-auto right-0 min-w-full w-56 z-30 mt-3"
+            x-show="showChildren"
+            x-transition:enter="transition ease duration-300 transform"
+            x-transition:enter-start="opacity-0 translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease duration-300 transform"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-4"
+            style="display: none"
+            @mouseenter="showChildren=true"
+            @mouseleave="showChildren=false"
+          >
+            <div class="bg-white rounded-2xl w-full relative z-10 py-2 px-2">
+              <ul class="list-reset">
+                
+                {% if not user.is_authenticated %}
+                <li class="relative">
+                  <a
+                    {% comment %} href="{% url 'login'%}" {% endcomment %}
+                    class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer"
+                  >
+                    <span class="flex-1">ورود</span>
+                  </a>
+                </li>
+                {% endif %}
+                <li class="relative">
+                  <a
+                    {% comment %} href="{% url 'search'%}" {% endcomment %}
+                    class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer"
+                  >
+                    <span class="flex-1">جستجو</span>
+                  </a>
+                </li>
+                <li class="relative">
+                  <a
+                    {% comment %} href="{% url 'about-us'%}" {% endcomment %}
+                    class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer"
+                  >
+                    <span class="flex-1">درباره ما</span>
+                  </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="relative">
+                  <a
+                    {% comment %} href="{% url 'logout'%}" {% endcomment %}
+                    class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer"
+                  >
+                    <span class="flex-1">خروج</span>
+                  </a>
+                </li>
+                {% endif %}
+                
+                
+              </ul>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>

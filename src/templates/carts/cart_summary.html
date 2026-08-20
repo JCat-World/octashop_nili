@@ -1,0 +1,155 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block down_content %}
+
+<!-- MAIN -->
+<div class="max-w-[1440px] mx-auto px-3">
+    <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
+      <div class="relative overflow-x-auto rounded-2xl border">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+          <thead class="hidden md:table-header-group text-xs text-gray-700 bg-gray-50">
+            <tr>
+              <th scope="col" class="px-16 py-3">
+                <span class="sr-only">تصویر</span>
+              </th>
+              <th scope="col" class="md:pr-6 py-3">
+                نام محصول
+              </th>
+              <th scope="col" class="pr-10 py-3">
+                تعداد
+              </th>
+              <th scope="col" class="px-6 py-3">
+                قیمت
+              </th>
+              <th scope="col" class="px-6 py-3">
+                دستورات
+              </th>
+            </tr>
+          </thead>
+          <tbody class="grid grid-cols-1 sm:grid-cols-2 md:contents gap-5">
+            
+            {% for product in cart_products %}
+            <tr class="bg-white border-b hover:bg-gray-50 grid grid-cols-1 justify-items-center md:table-row">
+              <td class="p-4">
+                <img src="{{ product.images.all.0.image.url }}" class="w-48 md:w-32 max-w-full max-h-full rounded-lg" alt="تصویر محصول">
+              </td>
+              <td class="md:pr-6 py-4 text-sm opacity-90 text-gray-900">
+                {{product.category}}
+                  {% if product.model is not None %}
+                    {{ product.model }}
+                  {% endif %}
+                {{ product.company_name}}
+              </td>
+              <td class="px-6 py-4">
+                <div class="quantity flex items-center">
+                  
+                  {% for key, value in quantities.items %}
+                    {% if key == product.id|slugify %}
+                    <input class="w-12 h-8 mx-2 text-center border focus:outline-none rounded-lg qty-prod" type="number" min="1" step="1" value="{{ value }}" readonly prod_id="{{product.id}}" id="inp-id-{{product.id}}">
+
+                    {% endif %}
+                  {% endfor %}
+                    
+                </div>
+              </td>
+              <td class="px-6 py-4 text-sm opacity-90 text-gray-900">
+                {% if product.is_offer %}
+                  {{product.offer_price}}
+                {% else %}
+                  {{product.price}}
+                {% endif %}
+                 تومان
+              </td>
+              <td class="px-6 py-4" id="td-actions-{{product.id}}">
+                <button type="submit" class=" text-red-600 remove-cart" id="del-{{product.id}}" data-index="{{product.id}}">حذف</button>
+                
+                
+              </td>
+              
+            </tr>
+            {% endfor %}
+              
+            
+            
+          </tbody>
+        </table>
+      </div>
+      <div class="border shadow-xl rounded-2xl mx-auto max-w-xl mt-7 flex flex-col gap-y-5 py-5 px-5 md:px-20">
+        <div class="flex justify-between">
+          <div>
+            قیمت کل:
+          </div>
+          <div class="flex gap-x-1">
+            <div>
+              {{ totals }}
+            </div>
+            <div>
+              تومان
+            </div>
+          </div>
+        </div>
+        {% comment %} <div class="flex justify-between">
+          <div>
+            حمل و نقل:
+          </div>
+          <div class="flex gap-x-1">
+            <div>
+              40,000
+            </div>
+            <div>
+              تومان
+            </div>
+          </div>
+        </div> {% endcomment %}
+
+
+        {% comment %} <div class="flex justify-between">
+          <div>
+            سود شما از این خرید:
+          </div>
+          <div class="flex gap-x-1">
+            <div>
+              80,000
+            </div>
+            <div>
+              تومان
+            </div>
+          </div>
+        </div> {% endcomment %}
+
+
+        
+        {% comment %} <div class="flex justify-between">
+          <div class="text-red-600">
+            مجموع نهایی:
+          </div>
+          <div class="flex gap-x-1">
+            <div>
+              1,200,000
+            </div>
+            <div>
+              تومان
+            </div>
+          </div>
+        </div> {% endcomment %}
+
+
+      </div>
+      <a 
+      {% comment %} href="{% url 'checkout' %}"  {% endcomment %}
+      class="flex justify-center items-center opacity-90 my-5">
+        <button class="px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-sm">تایید و پرداخت</button>
+      </a>
+    </div>
+  </div>
+
+
+{% endblock down_content %}
+
+
+
+{% block block_scripts %}
+<script type="text/javascript" src="{% static 'carts/js/cart.js' %}"></script>
+
+{% endblock block_scripts %}

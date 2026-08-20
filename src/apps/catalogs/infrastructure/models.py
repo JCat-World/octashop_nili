@@ -1,10 +1,13 @@
 from django.db import models
 from treebeard.mp_tree import MP_Node
 from django.utils.translation import gettext_lazy as _
-
+from django.utils.html import mark_safe
 from apps.catalogs.managers import CategoryManager
 
 from libs.db.fields import UpperCaseCharField
+
+
+from libs.db.models import AuditableModel
 
 class Category(MP_Node):
     title = models.CharField(_("title"), max_length=255, db_index=True)
@@ -17,8 +20,8 @@ class Category(MP_Node):
     objects = CategoryManager()
 
     class Meta:
-        verbose_name = 'category'
-        verbose_name_plural = 'categories'
+        verbose_name = _('category')
+        verbose_name_plural = _("categories")
 
     def __str__(self):
         return self.title
@@ -131,7 +134,8 @@ class Option(models.Model):
         return self.title
 
 
-class Product(models.Model):
+class Product(AuditableModel):
+    
     class ProductTypeChoice(models.TextChoices):
         standalone = 'standalone', _("Standalone")
         parent = 'parent', _("Parent")
@@ -160,17 +164,27 @@ class Product(models.Model):
 
     product_class = models.ForeignKey(ProductClass, on_delete=models.PROTECT,
                                       related_name='products', verbose_name=_("product class"), blank=True, null=True)
+    brand = models.ForeignKey('catalogs.ProductBrand', on_delete=models.PROTECT,
+                              related_name='products', verbose_name=_("brand"), blank=True, null=True)
     attributes = models.ManyToManyField(ProductAttribute, through='ProductAttributeValue',
                                         related_name='products', verbose_name=_("attributes"), blank=True)
     recommended_products = models.ManyToManyField(
         'catalogs.Product', related_name='recommended_by', verbose_name=_("recommended products"), blank=True, through='ProductRecommendation')
-
+    categories = models.ManyToManyField(
+        Category, related_name='products_categories', verbose_name=_("categories"), blank=True)
     class Meta:
         verbose_name = 'product'
         verbose_name_plural = 'products'
 
     def __str__(self):
         return self.title
+    
+    @property
+    def main_image(self):
+        if self.images.exists():
+            return self.images.order_by('display_order').first()
+        else:
+            return None
 
 
 class ProductAttributeValue(models.Model):
@@ -209,3 +223,73 @@ class ProductRecommendation(models.Model):
         verbose_name_plural = 'product recommendations'
         unique_together = ('primary', 'recommendation')
         ordering = ['primary', '-rank']
+
+
+
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ForeignKey('media.Image', on_delete=models.PROTECT)
+
+    display_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ('display_order',)
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+
+        for index, image in enumerate(self.product.images.all()):
+            image.display_order = index
+            image.save()
+            
+            
+
+class CategoryImages(models.Model):
+    category = models.ForeignKey(Category, verbose_name=_("محصول"), on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(_("تصویر"),
+                              height_field=None, width_field=None, max_length=None)
+
+    class Meta:
+        verbose_name = 'تصویر دسته بندی'
+        verbose_name_plural = 'تصاویر دسته بندی ها'
+
+    def __str__(self):
+        return self.category.title
+
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="150" height="150" />' % (self.image.url))
+
+    image_tag.short_description = 'Image'
+
+
+
+class LastOffer(models.Model):
+    product = models.ForeignKey("catalogs.Product", verbose_name=_("آخرین پیشنهاد"), on_delete=models.CASCADE, related_name="last_offer")
+    offer_price = models.PositiveIntegerField(_("قیمت با تخفیف"), null=False, blank=False)
+    offer_time = models.DateTimeField(_("زمان باقیمانده"), auto_now=False, auto_now_add=False)
+    
+    
+    class Meta:
+        verbose_name = 'آخرین پیشنهاد'
+        verbose_name_plural = 'آخرین پیشنهاد ها'
+        
+    def __str__(self):
+        return self.product.title
+    
+    
+    
+class ProductBrand(models.Model):
+    title = models.CharField(_("title"), max_length=255, db_index=True, null=True, blank=True)
+    description = models.CharField(
+        _("description"), max_length=2048, null=True, blank=True)
+    slug = models.SlugField(_("slug"), max_length=255,
+                            unique=True, db_index=True, allow_unicode=True)
+
+    class Meta:
+        verbose_name = 'product brand'
+        verbose_name_plural = 'product brands'
+
+    def __str__(self):
+        return self.title

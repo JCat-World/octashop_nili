@@ -1,0 +1,522 @@
+{% load static %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#b91c1c" />
+
+    <link rel="stylesheet" href=" {% static 'base/css/output.css' %}" />
+    <link rel="stylesheet" href=" {% static 'base/css/font.css' %} " />
+    <link rel="stylesheet" href=" {% static 'base/css/main.css' %} " />
+    <link rel="stylesheet" href=" {% static 'base/css/cart.css' %} " />
+
+    <!-- SLIDER HERO -->
+    <link
+      rel="stylesheet"
+      href=" {% static 'base/css/owl.carousel.min.css' %} "
+    />
+    <link
+      rel="stylesheet"
+      href=" {% static 'base/css/owl.theme.default.min.css' %} "
+    />
+    <!-- PRODUCT SLIDER CSS -->
+    <link
+      rel="stylesheet"
+      href=" {% static 'base/css/swiper-bundle.min.css' %} "
+    />
+    <link
+      rel="stylesheet"
+      href=" {% static 'base/css/style.product.slider.css' %} "
+    />
+
+    <title>{{ title_header }}</title>
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'base/image/logo-64.png' %}"
+    />
+    <script
+      type="text/javascript"
+      src=" {% static 'base/js/jquery.min.js' %} "
+    ></script>
+    {% block top_links %}{% endblock top_links %}
+  </head>
+
+  <body class="bg-gray-50">
+    <!-- NAVBAR -->
+    <div>
+      <!-- TOP -->
+      <nav
+        class="relative px-5 py-2 flex flex-wrap justify-between items-start pt-5 bg-white"
+      >
+        <a
+          class="order-2"
+
+          href="{% url 'home:home' %}"
+
+        >
+          <img
+            class="w-36"
+            src=" {% static 'base/image/logo.png' %} "
+            alt=""
+          />
+        </a>
+        <!-- Search Box -->
+        {% block search_box %} {% include 'base/plates/search-plate.html' %} {% endblock search_box %}
+
+        <div class="order-4 hidden lg:flex">
+          <!-- auth user account  -->
+          {% block auth_user %} {% include 'base/plates/auth-user-plate.html' %}
+          {% endblock auth_user %}
+
+          <!-------- Cart -------->
+          {% block cart %} {% include 'base/plates/cart-plate.html' %} {% endblock cart %}
+        </div>
+        <div class="order-1 lg:hidden">
+          <button class="navbar-burger flex items-center text-red-300 p-3">
+            <svg
+              class="block h-4 w-4 fill-current"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+      <!-- DOWN -->
+      <!-- Menu Downable -->
+      {% block menu_categories %}
+        {% include 'base/plates/menu-down-plate.html' %}
+      {% endblock menu_categories %}
+
+      <!--MOBILE NAVBAR-->
+      {% block mobile_navbar %} {% include 'base/plates/mobile-navbar.html' %}
+      {% endblock mobile_navbar %}
+      <!-- OPACITY SCREEN FOR SEARCH INPUT FOCUS -->
+      <div
+        class="absolute w-full h-screen bg-gray-200 opacity-40 z-40 hidden"
+        id="opacitiScreen"
+        onclick="closeScreen()"
+      ></div>
+    </div>
+    <!-- BOTTOM NAVIGATION -->
+    <div
+      class="px-4 bg-white shadow-2xl w-full border fixed bottom-0 left-1/2 -translate-x-1/2 md:hidden z-50"
+    >
+      <div class="grid grid-cols-5">
+        <div class="flex-1 group">
+          <a
+
+            {% comment %} href="{% url 'profile' %}" {% endcomment %}
+
+            class="flex items-end justify-center text-center mx-auto pt-2 w-full text-gray-800 group-hover:text-red-500"
+          >
+            <span class="block pt-1 pb-1">
+              <svg
+                class="mx-auto fill-gray-800 group-hover:fill-red-600"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill=""
+                viewBox="0 0 256 256"
+              >
+                <path
+                  d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"
+                ></path>
+              </svg>
+              <span class="block text-xs py-1">پروفایل</span>
+              <span
+                class="block w-5 mx-auto h-1 group-hover:bg-red-500 rounded-full"
+              ></span>
+            </span>
+          </a>
+        </div>
+        <div class="flex-1 group">
+          <a
+            {% comment %} {%
+            comment
+            %}
+            href="{% url 'favorites' %}"
+            {%
+            endcomment
+            %} {% endcomment %}
+            class="flex items-end justify-center text-center mx-auto pt-2 w-full text-gray-800 group-hover:text-red-500"
+          >
+            <span class="block pt-1 pb-1">
+              <svg
+                class="mx-auto fill-gray-800 group-hover:fill-red-600"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="#000000"
+                viewBox="0 0 256 256"
+              >
+                <path
+                  d="M178,32c-20.65,0-38.73,8.88-50,23.89C116.73,40.88,98.65,32,78,32A62.07,62.07,0,0,0,16,94c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,220.66,240,164,240,94A62.07,62.07,0,0,0,178,32ZM128,206.8C109.74,196.16,32,147.69,32,94A46.06,46.06,0,0,1,78,48c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,147.61,146.24,196.15,128,206.8Z"
+                ></path>
+              </svg>
+              <span class="block text-xs py-1">علاقه مندی</span>
+              <span
+                class="block w-5 mx-auto h-1 group-hover:bg-red-500 rounded-full"
+              ></span>
+            </span>
+          </a>
+        </div>
+        <div class="flex-1 group">
+          <a
+            {% comment %}  href="{% url 'index' %}" {% endcomment %}
+            class="flex items-end justify-center text-center mx-auto pt-2 w-full text-red-500"
+          >
+            <span class="block pt-1 pb-1">
+              <svg
+                class="mx-auto fill-red-600"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="#000000"
+                viewBox="0 0 256 256"
+              >
+                <path
+                  d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z"
+                ></path>
+              </svg>
+              <span class="block text-xs py-1">صفحه اصلی</span>
+              <span
+                class="block w-5 mx-auto h-1 bg-red-500 rounded-full"
+              ></span>
+            </span>
+          </a>
+        </div>
+        <div class="flex-1 group">
+          <a
+            {% comment %}
+            href="{% url 'search' %}"
+ {% endcomment %}
+            class="flex items-end justify-center text-center mx-auto pt-2 w-full text-gray-800 group-hover:text-red-500"
+          >
+            <span class="block pt-1 pb-1">
+              <svg
+                class="mx-auto fill-gray-800 group-hover:fill-red-600"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="#000000"
+                viewBox="0 0 256 256"
+              >
+                <path
+                  d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                ></path>
+              </svg>
+              <span class="block text-xs py-1">جستجو</span>
+              <span
+                class="block w-5 mx-auto h-1 group-hover:bg-red-500 rounded-full"
+              ></span>
+            </span>
+          </a>
+        </div>
+        <div class="flex-1 group">
+          <a
+ 
+            {% comment %} href="{% url 'cart_summary' %}" {% endcomment %}
+ 
+            class="flex items-end justify-center text-center mx-auto pt-2 w-full text-gray-800 group-hover:text-red-500"
+          >
+            <span class="block pt-1 pb-1">
+              <svg
+                class="mx-auto fill-gray-800 group-hover:fill-red-600"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="#000000"
+                viewBox="0 0 256 256"
+              >
+                <path
+                  d="M222.14,58.87A8,8,0,0,0,216,56H54.68L49.79,29.14A16,16,0,0,0,34.05,16H16a8,8,0,0,0,0,16h18L59.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,152,204a28,28,0,1,0,28-28H83.17a8,8,0,0,1-7.87-6.57L72.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,222.14,58.87ZM96,204a12,12,0,1,1-12-12A12,12,0,0,1,96,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,192,204Zm4-74.57A8,8,0,0,1,188.1,136H69.22L57.59,72H206.41Z"
+                ></path>
+              </svg>
+              <span class="block text-xs py-1">سبد خرید</span>
+              <span
+                class="block w-5 mx-auto h-1 group-hover:bg-red-500 rounded-full"
+              ></span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% block down_content %}{% endblock down_content %}
+
+    <!-- FOOTER -->
+    <footer class="pt-5 shadow-xl bg-white">
+      <!-- SERVICES -->
+      {% block service_block %}
+       {% include 'base/plates/services-plate.html' %}
+      {% endblock service_block %} 
+
+
+      <!-- MAIN -->
+      <div class="flex items-center justify-between my-4 px-5">
+        <a href="./index.html" class="inline-block">
+          <img
+            src="{% static 'base/image/logo.png' %}"
+            alt="logo"
+            class="w-48"
+          />
+        </a>
+        <button
+          type="button"
+          class="flex items-center gap-x-1 border rounded-lg px-3 py-2 text-zinc-500 text-sm md:text-base"
+          id="btn-back-to-top"
+        >
+          برو به بالا
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="#9c9c9c"
+            viewBox="0 0 256 256"
+          >
+            <path
+              d="M128,26A102,102,0,1,0,230,128,102.12,102.12,0,0,0,128,26Zm0,192a90,90,0,1,1,90-90A90.1,90.1,0,0,1,128,218Zm44.24-78.24a6,6,0,1,1-8.48,8.48L128,112.49,92.24,148.24a6,6,0,0,1-8.48-8.48l40-40a6,6,0,0,1,8.48,0Z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <div class="mx-auto shadow-lg">
+        <div class="flex flex-wrap">
+          <div class="w-full px-4 sm:w-2/3 lg:w-4/12">
+            <div class="mb-10 w-full">
+              <p class="mb-2 opacity-80">فروشگاه اینترنتی نیلی طب</p>
+              {% comment %}
+              <p class="mb-7 opacity-60 text-sm">
+                ایران مارکت به عنوان یکی از بروزترین فروشگاه های اینترنتی با بیش
+                از هفت سال تجربه، با پایبندی به اعتماد مشتری، موفق شده تا با
+                فروشگاه‌های معتبر ایران به یکی از بزرگ‌ترین فروشگاه اینترنتی
+                کشور تبدیل شود. هر آنچه که فکرش را بکنید و به ذهن شما خطور
+                می‌کند در اینجا پیدا خواهید کرد.
+              </p>
+              {% endcomment %}
+            </div>
+          </div>
+          <div class="w-full px-4 sm:w-1/2 lg:w-3/12">
+            <div class="mb-10 w-full">
+              <h4 class="mb-2 opacity-80">لینک های مفید:</h4>
+              <ul class="grid gap-y-2">
+                <li>
+                  <a
+             
+                    href="{% url 'home:home' %}" 
+     
+                    class="mb-2 text-sm hover:text-red-600 transition opacity-60 hover:opacity-100"
+                  >
+                    خانه
+                  </a>
+                </li>
+                <li>
+                  <a
+               
+                     href="{% url 'home:about-us' %}" 
+           
+                    class="mb-12 text-sm hover:text-red-600 transition opacity-60 hover:opacity-100"
+                  >
+                    درباره ما
+                  </a>
+                </li>
+                {% comment %}
+                <li>
+                  <a
+                    href="./index.html"
+                    class="mb-2 text-sm hover:text-red-600 transition opacity-60 hover:opacity-100"
+                  >
+                    پیگیری سفارش
+                  </a>
+                </li>
+                {% endcomment %} {% comment %}
+                <li>
+                  <a
+                    href="./faq.html"
+                    class="mb-2 text-sm hover:text-red-600 transition opacity-60 hover:opacity-100"
+                  >
+                    سوالات متداول
+                  </a>
+                </li>
+                {% endcomment %} {% comment %}
+                <li>
+                  <a
+                    href="./blog.html"
+                    class="mb-2 text-sm hover:text-red-600 transition opacity-60 hover:opacity-100"
+                  >
+                    بلاگ
+                  </a>
+                </li>
+                {% endcomment %}
+              </ul>
+            </div>
+          </div>
+          <div class="w-full px-4 sm:w-1/2 lg:w-3/12">
+            <div class="mb-10 w-full">
+              <h4 class="mb-2 opacity-80">ارتباط با ما:</h4>
+              <ul class="grid gap-y-2">
+                {% comment %}
+                <li>
+                  <div class="mb-2 text-sm opacity-60">
+                    آدرس: تهران،خیابان دماوند
+                  </div>
+                </li>
+                {% endcomment %}
+                <li>
+                  <div class="mb-2 text-sm opacity-60">تلفن : 09193271386</div>
+                </li>
+                <li>
+                  <div class="mb-2 text-sm opacity-60">
+                    ساعت پاسخگویی:9 الی 18
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="w-full px-4 sm:w-1/2 lg:w-2/12">
+            <div class="mb-10 w-full">
+              <h4 class="mb-2 text-center opacity-80">شبکه های اجتماعی:</h4>
+              <div class="mb-5 flex items-center justify-center">
+                {% comment %}
+                <a
+                  href="#"
+                  title="instagram"
+                  class="mr-1 flex h-12 w-12 items-center justify-center p-2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="64"
+                    height="64"
+                    fill="#333333"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"
+                    ></path>
+                  </svg>
+                </a>
+                <a
+                  href="#"
+                  title="telegram"
+                  class="mr-1 flex h-12 w-12 items-center justify-center p-2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="64"
+                    height="64"
+                    fill="#333333"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M236.88,26.19a9,9,0,0,0-9.16-1.57L25.06,103.93a14.22,14.22,0,0,0,2.43,27.21L80,141.45V200a15.92,15.92,0,0,0,10,14.83,15.91,15.91,0,0,0,17.51-3.73l25.32-26.26L173,220a15.88,15.88,0,0,0,10.51,4,16.3,16.3,0,0,0,5-.79,15.85,15.85,0,0,0,10.67-11.63L239.77,35A9,9,0,0,0,236.88,26.19Zm-61.14,36L86.15,126.35l-49.6-9.73ZM96,200V152.52l24.79,21.74Zm87.53,8L100.85,135.5l119-85.29Z"
+                    ></path>
+                  </svg>
+                </a>
+                {% endcomment %}
+                <a
+                  href="https://wa.me/989214795727"
+                  title="whatsapp"
+                  class="mr-1 flex h-12 w-12 items-center justify-center p-2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="64"
+                    height="64"
+                    fill="#333333"
+                    viewBox="0 0 256 256"
+                  >
+                    <path
+                      d="M187.58,144.84l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88,40,40,0,0,0,40-40A8,8,0,0,0,187.58,144.84ZM152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155l14.61-9.74,23,11.48A24,24,0,0,1,152,176ZM128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6.54-.67L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Z"
+                    ></path>
+                  </svg>
+                </a>
+              </div>
+              {% comment %}
+              <div class="flex items-center justify-center gap-x-5">
+                <a href="#">
+                  <img
+                    class="w-28 h-auto"
+                    src="{% static 'base/image/logoSecrets/symbol-02.png' %}"
+                    alt=""
+                  />
+                </a>
+                <a href="#">
+                  <img
+                    class="w-20 h-auto"
+                    src="{% static 'base/image/logoSecrets/zarinPal.png' %}"
+                    alt=""
+                  />
+                </a>
+              </div>
+              {% endcomment %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- COPYRIGHT -->
+      <div
+        class="px-4 grid grid-cols-1 sm:grid-cols-2 border-t-[1px] py-5 text-gray-400"
+      >
+        <span class="text-xs text-center sm:text-right">
+          تمامی حقوق برای نیلی طب محفوظ است 1405
+        </span>
+      </div>
+    </footer>
+  </body>
+  {% block block_scripts_s %}{% endblock block_scripts_s %}
+  <!--DROPDOWNS FOR NAVBAR-->
+  <script
+    type="text/javascript"
+    src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
+    defer
+  ></script>
+  <!--MOBILE NAVBAR-->
+  <script
+    type="text/javascript"
+    src=" {% static 'base/js/navbar.js' %} "
+  ></script>
+  <!-- SHOW MODAL SEARCH -->
+  <script
+    type="text/javascript"
+    src=" {% static 'base/js/searchBox.js' %} "
+  ></script>
+  <!-- SLIDER HERO -->
+
+  <script
+    type="text/javascript"
+    src=" {% static 'base/js/owl.carousel.min.js' %} "
+  ></script>
+  <script
+    type="text/javascript"
+    src=" {% static 'base/js/sliderHero.js' %} "
+  ></script>
+  <!-- PRODUCT SLIDER -->
+  <script
+    type="text/javascript"
+    src=" {% static 'base/js/swiper-bundle.min.js' %} "
+  ></script>
+  <script
+    type="text/javascript"
+    src=" {% static 'base/js/scriptSlider.style.js' %} "
+  ></script>
+  <!-- BIG SLIDER -->
+  <script
+    type="text/javascript"
+    src=" {% static 'base/js/bigSlider.js' %} "
+  ></script>
+  <!-- FOR TIMER OFF -->
+  <script
+    type="text/javascript"
+    src=" {% static 'base/js/main.js' %} "
+  ></script>
+  {% block block_scripts %}{% endblock block_scripts %}
+</html>

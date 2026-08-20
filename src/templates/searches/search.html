@@ -1,0 +1,205 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+{% block top_links %}
+<!-- shuld be remove -->
+{% comment %} <link rel="stylesheet" href=" {% static 'base/css/style.product.slider.css' %} "/> {% endcomment %}
+
+
+{% endblock top_links %}
+
+
+{% comment %} <link rel="stylesheet" href="./assets/css/output.css" />
+  <link rel="stylesheet" href="./assets/css/font.css">
+  <link rel="stylesheet" href="./assets/css/main.css">
+  <link rel="stylesheet" href="./assets/css/rangeInput.css"> {% endcomment %}
+
+
+
+{% block down_content %}
+
+<div class="max-w-[1440px] mx-auto px-3">
+  <div class="bg-white shadow-xl my-5 lg:my-10 rounded-xl md:rounded-2xl p-3 md:p-5">
+    <div class="bg-white mx-5 rounded-2xl mb-4 grid">
+      <div class="py-3">
+        <h3 class="text-xl font-semibold text-gray-800">جستجو محصولات</h3>
+      </div>
+    </div>
+    <div class="md:flex">
+      <div class="md:w-4/12 lg:w-3/12">
+        <div class="bg-white mx-5 mb-4 px-3 py-3 border rounded-xl">
+          <div>
+              
+              <div class="opacity-80 mb-1">
+                دسته بندی:
+              </div>
+              <div class="space-y-1">
+                {% for sub_category in sub_categories %}
+                
+                <div class="flex items-center rounded-lg hover:bg-gray-100 opacity-80">
+                  <input id="checkbox-item-{{ sub_category.id }}" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 mr-3">
+                  <label for="checkbox-item-{{ sub_category.id }}" class="w-full text-xs text-gray-900 rounded pr-1 py-2">{{ sub_category }}</label>
+                </div>
+                {% endfor %}
+                
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="bg-white mx-5 mb-4 px-3 py-3 border rounded-xl">
+            <div>
+              <div class="opacity-80 mb-1">
+                نوع محصول:
+              </div>
+              <div class="space-y-1">
+                
+                <div class="flex items-center rounded-lg hover:bg-gray-100 opacity-80">
+                  <input id="checkbox-item-21" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 mr-3">
+                  <label for="checkbox-item-21" class="w-full text-xs text-gray-900 rounded pr-1 py-2">سامسونگ</label>
+                </div>
+                
+              </div>
+            </div>
+          </div> {% endcomment %}
+          {% comment %} <div class="bg-white mx-5 mb-4 px-3 py-3 border rounded-xl">
+            <div class="wrapper">
+              <div class="price-input flex flex-col-reverse gap-y-3 text-sm opacity-80">
+                <div class="field">
+                  <span>تا</span>
+                  <input type="number" value="1000000">
+                  <span>تومان</span>
+                </div>
+                <div class="field">
+                  <span>از</span>
+                  <input type="number" value="0">
+                  <span>تومان</span>
+                </div>
+              </div>
+              <div class="slider">
+                <!-- <div class="progress"></div> -->
+              </div>
+              <div class="range-input">
+                <input type="range" class="range-min" min="0" max="1000000" value="0" step="100">
+                <input type="range" class="range-max" min="0" max="1000000" value="1000000" step="100">
+              </div>
+              <div class="flex justify-between opacity-70 text-xs my-3">
+                <span>
+                  ارزان ترین
+                </span>
+                <span>
+                  گران ترین
+                </span>
+              </div>
+            </div>
+          </div> {% endcomment %}
+          <div class="search-button flex justify-center items-center opacity-90">
+            <button id="search-button" class="px-7 py-2 text-center text-white bg-red-500 align-middle border-0 rounded-lg shadow-md text-xs">
+              جستجو     
+            </button>
+          </div>
+        </div>
+        <div class="md:w-8/12 lg:w-9/12">
+          <div class="bg-white mx-1 rounded-2xl grid place-items-center">
+            <div class="w-full">
+              <div class="py-3 border-b">
+                <div class="opacity-90 text-sm mb-2">
+                  مرتب سازی:
+                </div>
+                <div class="flex flex-wrap gap-5 justify-start items-center">
+                  {% comment %} <div class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer text-red-600">
+                    محبوب ترین
+                  </div> {% endcomment %}
+                  {% comment %} <div class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer">
+                    پرفروش ترین
+                  </div> {% endcomment %}
+                  {% comment %} <div class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer">
+                    ارزان ترین
+                  </div> {% endcomment %}
+                  {% comment %} <div class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer">
+                    گران ترین
+                  </div> {% endcomment %}
+                  <div class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer text-red-600">
+                    جدیدترین
+                  </div>
+                  {% comment %} <div class="opacity-70 text-xs hover:text-red-500 transition cursor-pointer">
+                    پربازدیدترین
+                  </div> {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-5 px-1 rounded-2xl py-5">
+              {% for last in last20 %}
+              
+              <a href="{% url 'product' last.id %}" class="my-2 py-2 md:p-3 border rounded-xl flex items-center sm:inline hover:shadow-lg transition">
+                <div class="image-box sm:mb-6">
+                  <div>
+                    <img class="hover:scale-105 transition rounded-md sm:rounded-3xl w-24 sm:w-full mx-auto" src="{{ last.images.all.0.image.url }}" alt="" />
+                  </div>
+                </div>
+                <div class="flex flex-col w-full">
+                  <span class="text-xs sm:text-sm opacity-90 mb-5">
+                    <div class="leading-7 h-auto">
+                      {{ last.category }} 
+                      {% if last.model is not None %}
+                        {{ last.model}}
+                      {% endif %}
+          
+                      {{ last.company_name}}
+                    </div>
+                  </span>
+                  {% if last.is_offer %}
+      <div class="flex justify-end mb-2 text-sm opacity-80 pl-3 md:pl-0">
+        <div>{{ last.offer_price }}</div>
+        <div>تومان</div>
+      </div>
+      <div class="flex justify-end text-xs opacity-75 pl-3 md:pl-0">
+        
+        <div class="line-through">{{last.price}}</div>
+        <div class="line-through">تومان</div>
+      </div>
+      {% else %}
+      <div class="flex justify-end mb-2 text-sm opacity-80 pl-3 md:pl-0">
+        <div>{{ last.price }}</div>
+        <div>تومان</div>
+      </div>
+      
+      <div class="flex justify-end text-xs opacity-75 pl-3 md:pl-0">
+        <div class="line-through">&nbsp</div>
+        <div class="line-through">&nbsp</div>
+      </div>
+      
+      
+      {% endif %}
+                </div>
+              </a>
+
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div> 
+
+{% endblock down_content %}
+
+
+
+
+
+{% block block_scripts %}
+
+<!-- SHOW MODAL SEARCH -->
+<script src="{% static 'base/js/searchBox.js' %}"></script>
+<!-- RANGE INPUT -->
+<script src="{% static 'base/js/rangeinput.js' %}"></script>
+<!-- SEARCH ENGIN -->
+<script type="text/javascript" src=" {% static 'searches/js/searches.js' %} "></script>
+
+
+{% endblock block_scripts %}
+
+  
