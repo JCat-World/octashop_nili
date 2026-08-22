@@ -22,8 +22,9 @@ doc_urls = [
 
 
 site_urls = [
-    path('', include(('apps.home.urls','apps.home'), namespace='home')),
+    path('', include(('apps.home.urls','apps.home'), namespace='home-site')),
     path('api/site/catalogs/', include(('apps.catalogs.urls.site', 'apps.catalogs'), namespace='catalogs-site')),
+    path('auth/', include(('auth.users.urls.site','auth.users'), namespace='users-site')),
 ]
 
 urlpatterns = [

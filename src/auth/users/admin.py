@@ -4,15 +4,15 @@ from .infrastructure.models import *
 
 # Register your models here.
 
-# @admin.register(User)
-# class UserAdmin(admin.ModelAdmin):
-#     list_display = ('username', 'email', 'is_active',)
-#     search_fields = ('username', 'email')
-#     list_filter = ('is_active',)
-#     # ordering = ('-date_joined',)
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'is_active',)
+    search_fields = ('username', 'email')
+    list_filter = ('is_active',)
+    # ordering = ('-date_joined',)
     
-#     def get_queryset(self, request):
-#         return super().get_queryset(request).select_related('profile')
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('profile')
     
 
 

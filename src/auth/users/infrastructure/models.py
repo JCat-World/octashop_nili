@@ -23,13 +23,14 @@ class UserManager(BaseUserManager):
     
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, blank=True, null=True)
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True, unique=True)
     username = models.CharField(max_length=150, unique=True)
     full_name = models.CharField(max_length=255, blank=True)
     first_name = models.CharField(max_length=64, blank=True, null=True)
     last_name = models.CharField(max_length=64, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    old_cart = models.TextField(blank=True, null=True)
     
     objects = UserManager()
 

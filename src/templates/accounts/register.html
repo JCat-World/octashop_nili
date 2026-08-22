@@ -22,10 +22,10 @@
   
   <div class="flex justify-center items-center text-right h-screen w-96 mx-auto pt-16">
     <div class="shadow-xl rounded-2xl p-8 bg-white mt-16">
-      <form action="{% url 'register' %}" method="POST">
+      <form action="{% url 'users-site:register' %}" method="POST">
         {% csrf_token %}
         <div class="mb-2">
-          <a href="{% url 'index' %}">
+          <a href="{% url 'home-site:home' %}">
             <img src="{% static 'base//image/logo.png' %}" alt="" class="w-36 mx-auto">
           </a>
         </div>
@@ -86,11 +86,11 @@
             ثبت نام
           </button>
         </div>
-        {% comment %} <div class="text-xs opacity-80">
+        <div class="text-xs opacity-80">
           ثبت نام یا ورود شما به منظور پذیرش
           <a href="#" class="text-red-500">قوانین و مقررات</a>
-          ایران ماسل می باشد
-        </div> {% endcomment %}
+          نیلی طب می باشد
+        </div> 
       </form>
     </div>
   </div>

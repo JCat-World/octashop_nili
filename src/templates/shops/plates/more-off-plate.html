@@ -4,7 +4,7 @@
   <div class="flex justify-between px-5 md:px-10 items-center">
     <div class="border-b-2 border-red-500 pb-1">پرتخفیف ترین ها</div>
     <a 
-    href="{% url 'home:last-offer' %}" 
+    href="{% url 'home-site:last-offer' %}" 
     >
       <div class="transition px-4 py-2 rounded-xl flex justify-center items-center text-red-500 hover:text-red-600">
         دیدن همه<img class="w-4" src="{% static 'base/image/arrow-left.png' %}" alt="" />
@@ -18,7 +18,7 @@
         {% if more_offer %}
           {% for item in more_offer %}
             <a
-             href="{% url 'home:product' item.id %}"  
+             href="{% url 'home-site:product' item.id %}"  
              class="card swiper-slide my-2 p-2 md:p-3">
               <div class="image-box mb-6">
                 <div>

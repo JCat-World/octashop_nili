@@ -6,7 +6,7 @@
         <!-- index link -->
         <li class="block relative">
           <a
-            href=" {% url 'home:home' %} "
+            href=" {% url 'home-site:home' %} "
             class="flex items-center h-10 text-sm leading-10 px-4 mx-1 transition text-gray-700 hover:text-red-500"
           >
             <span class="border-b-2 border-red-600">صفحه اصلی</span>
@@ -16,7 +16,7 @@
         {% if sub_categories %} {% for sub_category in sub_categories %}
         <li class="block relative" x-data="{showChildren:false}">
           <a
-             href="{% url 'home:category-summary' %}" 
+             href="{% url 'home-site:category-summary' %}" 
             class="flex items-center h-10 leading-10 px-3 text-sm mx-1 transition text-gray-700 hover:text-red-500"
             @click.prevent="showChildren=!showChildren"
             @mouseenter="showChildren=true"
@@ -51,7 +51,7 @@
                 {% for category in sub_category.products.all %}
                 <li class="relative">
                   <a
-                    href="{% url 'home:product-category' category.id %}"
+                    href="{% url 'home-site:product-category' category.id %}"
                     class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer"
                   >
                     <span class="flex-1">{{ category }}</span>
@@ -99,7 +99,7 @@
                 {% if not user.is_authenticated %}
                 <li class="relative">
                   <a
-                    {% comment %} href="{% url 'login'%}" {% endcomment %}
+                    href="{% url 'users-site:login'%}"
                     class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer"
                   >
                     <span class="flex-1">ورود</span>
@@ -108,7 +108,7 @@
                 {% endif %}
                 <li class="relative">
                   <a
-                    {% comment %} href="{% url 'search'%}" {% endcomment %}
+                     {% comment %} href="{% url 'home-site:search'%}" {% endcomment %}
                     class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer"
                   >
                     <span class="flex-1">جستجو</span>
@@ -116,7 +116,7 @@
                 </li>
                 <li class="relative">
                   <a
-                    {% comment %} href="{% url 'about-us'%}" {% endcomment %}
+                    href="{% url 'home-site:about-us'%}" 
                     class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer"
                   >
                     <span class="flex-1">درباره ما</span>
@@ -125,7 +125,7 @@
                 {% if user.is_authenticated %}
                 <li class="relative">
                   <a
-                    {% comment %} href="{% url 'logout'%}" {% endcomment %}
+                    href="{% url 'users-site:logout'%}"
                     class="px-4 py-2 flex w-full items-start hover:bg-red-100 rounded-lg transition no-underline hover:no-underline duration-100 cursor-pointer"
                   >
                     <span class="flex-1">خروج</span>

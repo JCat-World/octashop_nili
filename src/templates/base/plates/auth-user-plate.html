@@ -99,7 +99,7 @@
           @mouseenter="showChildren=true"
         >
           <a
-            {% comment %} href="{% url 'logout' %}" {% endcomment %}
+             href="{% url 'users-site:logout'%}" 
             class="px-4 py-2 flex w-full items-start hover:bg-red-50 rounded-xl"
           >
             <span class="flex justify-center items-center text-sm opacity-90"
@@ -116,7 +116,7 @@
   </div>
   {% else %}
   <a
-    {% comment %} href="{% url 'login' %}" {% endcomment %}
+    href="{% url 'users-site:login'%}" 
     class="flex items-center h-10 leading-10 px-3 mx-1 transition rounded-xl hover:bg-red-50"
   >
     <img class="ml-1 w-6" src=" {% static 'base/image/user.png' %} " alt="" />

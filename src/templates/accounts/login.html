@@ -32,11 +32,11 @@
   {% endif %}
   <div class="flex justify-center items-center text-right h-screen w-96 mx-auto">
     <div class="shadow-xl rounded-2xl p-8 bg-white">
-      <form action="{% url 'login' %}" method="POST">
+      <form action="{% url 'users-site:login' %}" method="POST">
         {% csrf_token %}
         <div class="mb-2">
-          <a href="{% url 'index' %}">
-            <img src="{% static 'base//image/logo.png' %}" alt="" class="w-36 mx-auto">
+          <a href="{% url 'home-site:home' %}">
+            <img src="{% static 'base/image/logo.png' %}" alt="" class="w-36 mx-auto">
           </a>
         </div>
         <div class="opacity-80 text-lg mb-5">
@@ -61,13 +61,13 @@
         </div>
         <div class="text-xs opacity-80">
           ثبت نام یا ورود شما به منظور پذیرش
-          <a href="{% url 'rules' %}" class="text-red-500">قوانین و مقررات</a>
+          <a href="{% url 'users-site:rules' %}" class="text-red-500">قوانین و مقررات</a>
           ایران ماسل می باشد
         </div>
         <br>
         <div class="text-xs opacity-80">
           جهت ثبت نام
-          <a href="{% url 'register' %}" class="text-red-500">اینجا</a>
+          <a href="{% url 'users-site:register' %}" class="text-red-500">اینجا</a>
           کلیک کنید
         </div>
       </form>
